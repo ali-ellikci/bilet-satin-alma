@@ -1,0 +1,294 @@
+/* Temel stiller */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #fff0f0, #ffeaea);
+    color: #111;
+    transition: all 0.3s ease;
+}
+
+/* Navbar */
+header {
+    background-color: #FF0000; /* YouTube kırmızısı */
+    padding: 10px 20px;
+    border-bottom: 3px solid #b30000; 
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-right a, .nav-right button {
+    margin-left: 15px;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-right a:hover, .nav-right button:hover {
+    transform: scale(1.1);
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Arama form (ana sayfa) */
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.search-form select, .search-form input[type="date"], .search-form .btn {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.search-form select:hover, .search-form input[type="date"]:hover, .search-form .btn:hover {
+    border-color: #dc2626;
+}
+
+/* Trips grid */
+.trips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Trip Card */
+.trip-card {
+    background: #fff0f0;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.trip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.trip-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.trip-body .route {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.trip-body .time {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Bilet butonu */
+.buy {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background-color: #dc2626;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+}
+
+.buy:hover {
+    background-color: #b91c1c;
+}
+
+.buy[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #111;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.full {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+/* Occupancy bar */
+.occupancy-bar {
+    background: #eee;
+    border-radius: 8px;
+    height: 6px;
+    margin-top: 8px;
+}
+
+.occupancy-bar .progress {
+    background: #dc2626;
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.3s ease;
+}
+
+/* Dark Tema */
+body.dark {
+    background: linear-gradient(to right, #111, #1a0000);
+    color: #fff;
+}
+
+body.dark .container {
+    background-color: #1f1f1f;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+body.dark .trip-card {
+    background: #2b0000;
+}
+
+body.dark .trip-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+}
+
+body.dark .trip-body .time {
+    color: #ccc;
+}
+
+body.dark .buy {
+    background-color: #ef4444;
+}
+
+body.dark .buy:hover {
+    background-color: #b91c1c;
+}
+
+body.dark .full {
+    background-color: #555;
+}
+
+body.dark header {
+    background-color: #FF0000;
+    border-bottom: 3px solid #b30000;
+}
+
+/* -------------------------------------- */
+/* Login ve Register formları için ayrı class */
+/* -------------------------------------- */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form select,
+.auth-form input[type="date"] {
+    width: 100%;
+    max-width: 350px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.auth-form input[type="text"]:hover,
+.auth-form input[type="email"]:hover,
+.auth-form input[type="password"]:hover,
+.auth-form select:hover,
+.auth-form input[type="date"]:hover {
+    border-color: #dc2626; 
+    box-shadow: 0 0 8px rgba(220,38,38,0.3);
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus,
+.auth-form select:focus,
+.auth-form input[type="date"]:focus {
+    border-color: #b91c1c;
+    outline: none;
+    box-shadow: 0 0 10px rgba(220,38,38,0.5);
+}
+
+.auth-form .btn {
+    width: 100%;
+    max-width: 350px;
+    padding: 12px 0;
+    border-radius: 8px;
+    border: none;
+    background-color: #dc2626;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.auth-form .btn:hover {
+    background-color: #b91c1c;
+    transform: scale(1.02);
+}
+
+.auth-form p {
+    font-size: 14px;
+    color: #dc2626;
+    margin: 5px 0 0 0;
+}
+
+/* Dark tema auth-form */
+body.dark .auth-form input {
+    background-color: #2b0000;
+    border: 1px solid #555;
+    color: #fff;
+}
+
+body.dark .auth-form input:hover {
+    border-color: #ef4444;
+    box-shadow: 0 0 8px rgba(239,68,68,0.3);
+}
+
+body.dark .auth-form input:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 10px rgba(239,68,68,0.5);
+}
+
+body.dark .auth-form .btn {
+    background-color: #ef4444;
+}
+
+body.dark .auth-form .btn:hover {
+    background-color: #b91c1c;
+}
