@@ -1,0 +1,43 @@
+
+        /* --- Sadece bu sayfaya özel CSS kodları --- */
+        .seat-selection-container { display: flex; flex-wrap: wrap; gap: 40px; }
+        .trip-details { flex: 1; min-width: 300px; }
+        .seat-map-container { flex: 2; min-width: 340px; } /* Genişlik artırıldı */
+
+        .seat-map {
+            display: grid;
+            /* YENİ VE DOĞRU YAPI: 1 koltuk, 1 koridor, 2 koltuk */
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 12px; /* Boşluk biraz artırıldı */
+            max-width: 340px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            box-sizing: border-box; /* Bu hala gerekli ve doğru */
+        }
+        body.dark .seat-map { background-color: #2b0000; border-color: #444; }
+
+        .seat, .aisle-space {
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            font-weight: bold;
+            color: white;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .aisle-space { background-color: transparent; } /* Koridor artık bir grid hücresi */
+        .seat { cursor: pointer; }
+        .seat.empty { background-color: #4caf50; }
+        .seat.empty:hover { background-color: #45a049; transform: scale(1.05); }
+        .seat.booked { background-color: #dc2626; cursor: not-allowed; opacity: 0.7; }
+        .seat.selected { background-color: #2196F3; transform: scale(1.1); box-shadow: 0 0 10px #2196F3; }
+        
+        .summary { text-align: center; margin-top: 20px; }
+        .summary h3 { margin-bottom: 5px; }
+        .summary #total-price-display { color: #dc2626; font-size: 24px; }
+        body.dark .summary #total-price-display { color: #ef4444; }

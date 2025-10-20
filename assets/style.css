@@ -8,6 +8,12 @@ body {
     transition: all 0.3s ease;
 }
 
+
+a {
+    text-decoration: none; /* Sadece alt çizgiyi kaldırır, renge DOKUNMAZ */
+    color: white;
+}
+
 /* Navbar */
 header {
     background-color: #FF0000; /* YouTube kırmızısı */
@@ -16,6 +22,13 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
+}
+.nav-link {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 5px; /* İkonla arasına biraz boşluk koyar */
+    transition: all 0.2s ease;
 }
 
 .nav-container {
@@ -40,6 +53,7 @@ header {
 }
 
 /* Container */
+/*
 .container {
     width: 90%;
     max-width: 1000px;
@@ -49,6 +63,7 @@ header {
     background-color: #fff;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
+*/
 
 /* Arama form (ana sayfa) */
 .search-form {
@@ -291,4 +306,114 @@ body.dark .auth-form .btn {
 
 body.dark .auth-form .btn:hover {
     background-color: #b91c1c;
+}
+
+/* =============================================== */
+/* YENİ ARAMA FORMU STİLLERİ */
+/* =============================================== */
+.search-container {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+
+    /* --- SORUNU ÇÖZEN EKLENTİLER --- */
+    max-width: 850px;     /* Genişliğin çok fazla büyümesini engelle */
+    margin-left: auto;    /* Sol tarafa otomatik boşluk ver */
+    margin-right: auto;   /* Sağ tarafa otomatik boşluk ver */
+}
+.new-search-form {
+    display: flex;
+    align-items: stretch; /* Tüm elemanların boyu eşit olsun */
+    gap: 15px;
+}
+.form-row {
+    flex-grow: 1;
+    display: flex;
+    gap: 15px;
+    position: relative; /* Yer değiştirme butonu için */
+}
+.input-group {
+    background-color: #333;
+    border-radius: 12px;
+    padding: 10px 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.input-group label {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+.input-group select {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; /* Select okunu kaldır */
+    cursor: pointer;
+}
+.input-group select:focus {
+    outline: none;
+}
+.swap-btn {
+    position: absolute;
+    left: 25%; /* İlk kutunun sağına hizala */
+    top: 50%;
+    transform: translateY(-50%);
+    background: #555;
+    color: white;
+    border: 2px solid #1f1f1f;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 2;
+}
+.date-group .date-options {
+    display: flex;
+    gap: 15px;
+    color: white;
+    font-size: 16px;
+}
+.search-btn-main {
+    width: 75px;
+    height: 75px;
+    margin-top: 10clear
+    px;
+    font-size: 18px;
+    min-width: 50px;
+    border-radius: 50%;
+}
+
+
+/* =============================================== */
+/* GÜNCELLENMİŞ TARİH SEÇİM ALANI STİLLERİ */
+/* =============================================== */
+.date-group .date-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Radyo butonları ve takvim arasına boşluk koyar */
+}
+
+.new-search-form input[type="date"] {
+    background-color: #555; /* Temaya uygun arka plan */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-family: inherit; /* Ana fontu kullan */
+    font-size: 16px;
+    flex-grow: 1; /* Kalan boşluğu doldur */
+}
+
+/* Chrome/Edge'de takvim ikonunu beyaz yapmak için */
+.new-search-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }

@@ -38,7 +38,8 @@ try {
             'destination_city' => 'Ankara',
             'departure_time' => '2025-10-10 08:00:00', 
             'arrival_time' => '2025-10-10 14:00:00', 
-            'price' => 550.00
+            'price' => 550.00,
+            'capacity' => 45 // Kapasite sütununu eklediysen bu değeri kullanabilirsin
         ],
         [
             'id' => generate_id('TRP'), 
@@ -47,47 +48,51 @@ try {
             'destination_city' => 'İzmir',
             'departure_time' => '2025-10-10 12:00:00', 
             'arrival_time' => '2025-10-10 20:00:00', 
-            'price' => 620.50
+            'price' => 620.50,
+            'capacity' => 40
         ],
-        [
-            'id' => generate_id('TRP'), 
-            'company_id' => $mega_turizm_id, 
-            'departure_city' => 'Ankara',
-            'destination_city' => 'İstanbul',
-            'departure_time' => '2025-10-11 00:30:00', 
-            'arrival_time' => '2025-10-11 06:30:00', 
-            'price' => 575.00
-        ],
-        [
-            'id' => generate_id('TRP'), 
-            'company_id' => $mega_turizm_id, 
-            'departure_city' => 'Ankara',
-            'destination_city' => 'İstanbul',
-            'departure_time' => '2025-10-10 10:00:00', 
-            'arrival_time' => '2025-10-10 16:00:00', 
-            'price' => 550.00
-        ]
+        // Diğer seferlerin...
     ];
     
     $stmt_trip = $db->prepare("
-        INSERT INTO Trips (id, company_id, departure_city, destination_city, departure_time, arrival_time, price, created_date) 
-        VALUES (:id, :company_id, :departure_city, :destination_city, :departure_time, :arrival_time, :price, CURRENT_TIMESTAMP)
+        INSERT INTO Trips (id, company_id, departure_city, destination_city, departure_time, arrival_time, price, capacity) 
+        VALUES (:id, :company_id, :departure_city, :destination_city, :departure_time, :arrival_time, :price, :capacity)
     ");
     
     foreach ($trips as $trip) {
-        $stmt_trip->execute([
-            ':id' => $trip['id'],
-            ':company_id' => $trip['company_id'],
-            ':departure_city' => $trip['departure_city'],
-            ':destination_city' => $trip['destination_city'],
-            ':departure_time' => $trip['departure_time'],
-            ':arrival_time' => $trip['arrival_time'],
-            ':price' => $trip['price'],
-        ]);
+        $stmt_trip->execute($trip);
     }
 
-    echo "✅ 4 Test Seferi eklendi.\n";
-    echo "\n\nBaşlangıç verileri başarıyla eklendi! Artık index.php'yi çalıştırabilirsiniz.\n";
+    echo "✅ Test Seferleri eklendi.\n";
+
+    // --- 3. YENİ KULLANICI EKLEME BÖLÜMÜ ---
+
+    // Parolayı güvenli bir şekilde şifrele
+    $hashed_password = password_hash('test', PASSWORD_DEFAULT);
+
+    // Eklenecek kullanıcı bilgileri
+    $test_user = [
+        'id' => generate_id('USR'),
+        'full_name' => 'test',
+        'email' => 'test@test.test',
+        'role' => 'user',
+        'password' => $hashed_password,
+        'company_id' => null, // Normal kullanıcı olduğu için company_id boş
+        'balance' => 999999999.0
+    ];
+    
+    // Kullanıcıyı veritabanına ekle. 'INSERT OR IGNORE' sayesinde kullanıcı zaten varsa hata vermez.
+    $stmt_user = $db->prepare(
+        "INSERT OR IGNORE INTO User (id, full_name, email, role, password, company_id, balance) 
+         VALUES (:id, :full_name, :email, :role, :password, :company_id, :balance)"
+    );
+
+    $stmt_user->execute($test_user);
+
+    echo "✅ 'test' kullanıcısı başarıyla eklendi (varsa atlandı).\n";
+
+
+    echo "\n\nBaşlangıç verileri başarıyla eklendi! Artık uygulamayı kullanabilirsiniz.\n";
 
 } catch (PDOException $e) {
     echo "❌ Hata: " . $e->getMessage() . PHP_EOL;

@@ -57,6 +57,7 @@ try {
             departure_time DATETIME NOT NULL,
             departure_city TEXT NOT NULL,
             price REAL NOT NULL,
+            capacity INT NOT NULL,
             created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(company_id) REFERENCES Bus_Company(id) ON DELETE CASCADE
         );
