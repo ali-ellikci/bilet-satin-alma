@@ -1,0 +1,209 @@
+/* Index page specific styles: search bar, trips grid & cards */
+
+
+.container h1 {
+    text-align: center;
+}
+/* Trips grid */
+.trips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Trip Card */
+.trip-card {
+    background: #fff0f0;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: al 0.3s ease;
+    margin-top: 20px;
+}
+
+.trip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.trip-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.trip-body .route {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.trip-body .time {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Dark variants for trip card */
+body.dark .trip-card {
+    background: #2b0000;
+}
+
+body.dark .trip-card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+}
+
+body.dark .trip-body .time {
+    color: #ccc;
+}
+
+/* New search form styles (index page) */
+.search-container {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+
+    /* limit width and center */
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.new-search-form {
+    display: flex;
+    align-items: stretch;
+    gap: 15px;
+}
+
+.form-row {
+    flex-grow: 1;
+    display: flex;
+    gap: 15px;
+    position: relative;
+}
+
+.input-group {
+    background-color: #333;
+    border-radius: 12px;
+    padding: 10px 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.input-group select {
+    background: transparent;
+    border: none;
+    color: #111; /* dark text for readability in light theme */
+    font-size: 20px;
+    font-weight: bold;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Ensure option text/background are readable in default (light) theme */
+.input-group select option {
+    color: #111;
+    background: #fff;
+}
+
+.input-group select:focus {
+    outline: none;
+}
+
+/* Dark theme variants for selects */
+body.dark .input-group select {
+    color: #fff; /* white text in dark mode */
+}
+body.dark .input-group select option {
+    color: #fff;
+    background: #2b0000; /* match dark card bg */
+}
+
+.swap-btn {
+    position: absolute;
+    left: 25%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #555;
+    color: white;
+    border: 2px solid #1f1f1f;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 2;
+}
+
+.date-group .date-options {
+    display: flex;
+    gap: 15px;
+    color: white;
+    font-size: 16px;
+}
+
+
+.date-group .date-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.new-search-form input[type="date"] {
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.new-search-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+
+
+/* submit button */
+.icon-btn {
+  background: none;      /* arka planı kaldır */
+  border: none;          /* çerçeveyi kaldır */
+  padding: 0;            /* butonun default padding’ini kaldır */
+  margin: 0;             /* margin varsa kaldır */
+  display: inline-flex;  /* SVG’yi ortalamak için flex */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;       /* tıklanabilir göstergesi */
+  line-height: 0;        /* SVG üst/bottom spacing’i kaldır */
+  color: inherit;        /* ikon rengini metin rengiyle eşleştir */
+  width: 30px;
+}
+
+.icon-btn svg {
+  display: block;        /* SVG’nin ekstra boşluklarını kaldırır */
+  width: 20px;           /* boyutu ayarla */
+  height: 20px;
+  fill: currentColor;    /* rengini CSS ile değiştirebilirsin */
+  transition: transform 0.12s ease;
+}
+
+.icon-btn:hover svg {
+  transform: scale(1.05); /* hover efekti, isteğe bağlı */
+}
+
+.icon-btn:focus {
+  outline: none;         /* focus outline’ı kaldır, istersen minimal bırakabilirsin */
+}
+

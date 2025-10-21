@@ -51,6 +51,46 @@ try {
             'price' => 620.50,
             'capacity' => 40
         ],
+        [
+        'id' => generate_id('TRP'), 
+        'company_id' => $mega_turizm_id, 
+        'departure_city' => 'İstanbul',
+        'destination_city' => 'Ankara',
+        'departure_time' => date('Y-m-d H:i:s', strtotime('+35 days 08:00')), 
+        'arrival_time' => date('Y-m-d H:i:s', strtotime('+35 days 14:00')), 
+        'price' => 550.00,
+        'capacity' => 45
+        ],
+        [
+        'id' => generate_id('TRP'), 
+        'company_id' => $super_seyahat_id, 
+        'departure_city' => 'Ankara',
+        'destination_city' => 'İzmir',
+        'departure_time' => date('Y-m-d H:i:s', strtotime('+36 days 12:00')), 
+        'arrival_time' => date('Y-m-d H:i:s', strtotime('+36 days 20:00')), 
+        'price' => 620.50,
+        'capacity' => 40
+        ],
+        [
+        'id' => generate_id('TRP'), 
+        'company_id' => $mega_turizm_id, 
+        'departure_city' => 'İzmir',
+        'destination_city' => 'Antalya',
+        'departure_time' => date('Y-m-d H:i:s', strtotime('+37 days 09:00')), 
+        'arrival_time' => date('Y-m-d H:i:s', strtotime('+37 days 15:30')), 
+        'price' => 700.00,
+        'capacity' => 50
+        ],
+        [
+        'id' => generate_id('TRP'), 
+        'company_id' => $super_seyahat_id, 
+        'departure_city' => 'Antalya',
+        'destination_city' => 'İstanbul',
+        'departure_time' => date('Y-m-d H:i:s', strtotime('+38 days 07:30')), 
+        'arrival_time' => date('Y-m-d H:i:s', strtotime('+38 days 13:30')), 
+        'price' => 750.00,
+        'capacity' => 45
+        ],
         // Diğer seferlerin...
     ];
     

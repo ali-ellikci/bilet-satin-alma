@@ -1,0 +1,160 @@
+/* -------------------------------------
+   Auth Page Styles (Login & Register)
+--------------------------------------*/
+
+/* Form container */
+.login-container,
+.auth-page {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Headings */
+.login-container h1,
+.login-container h2,
+.auth-page h1,
+.auth-page h2 {
+    margin-bottom: 20px;
+    color: #000;
+}
+
+/* Form layout */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Input fields */
+.auth-form input,
+.auth-form select,
+.auth-form input[type="date"] {
+    width: 100%;
+    max-width: 350px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #fff;
+    color: #000;
+    transition: all 0.2s ease;
+}
+
+.auth-form input:hover,
+.auth-form select:hover,
+.auth-form input[type="date"]:hover {
+    border-color: #dc2626;
+    box-shadow: 0 0 8px rgba(220,38,38,0.3);
+}
+
+.auth-form input:focus,
+.auth-form select:focus,
+.auth-form input[type="date"]:focus {
+    border-color: #b91c1c;
+    outline: none;
+    box-shadow: 0 0 10px rgba(220,38,38,0.5);
+}
+
+/* Button */
+.auth-form .btn {
+    width: 100%;
+    max-width: 350px;
+    padding: 12px 0;
+    border-radius: 8px;
+    border: none;
+    background-color: #dc2626;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.auth-form .btn:hover {
+    background-color: #b91c1c;
+    transform: scale(1.02);
+}
+
+/* Links & messages */
+.auth-form p,
+.error-msg {
+    font-size: 14px;
+    color: #dc2626;
+    margin: 5px 0 0 0;
+}
+
+a {
+    color: #dc2626;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* -----------------------
+   Dark Theme Overrides
+------------------------*/
+body.dark {
+    background-color: #120000;
+    color: #fff;
+}
+
+body.dark .login-container,
+body.dark .auth-page {
+    background-color: #3b0000;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+body.dark .login-container h1,
+body.dark .login-container h2,
+body.dark .auth-page h1,
+body.dark .auth-page h2,
+body.dark .auth-form p,
+body.dark .error-msg {
+    color: #fff;
+}
+
+body.dark a {
+    color: #f87171;
+}
+
+body.dark .auth-form input,
+body.dark .auth-form select,
+body.dark .auth-form input[type="date"] {
+    background-color: #2b0000;
+    border: 1px solid #555;
+    color: #fff;
+}
+
+body.dark .auth-form input:hover,
+body.dark .auth-form select:hover,
+body.dark .auth-form input[type="date"]:hover {
+    border-color: #ef4444;
+    box-shadow: 0 0 8px rgba(239,68,68,0.3);
+}
+
+body.dark .auth-form input:focus,
+body.dark .auth-form select:focus,
+body.dark .auth-form input[type="date"]:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 10px rgba(239,68,68,0.5);
+}
+
+body.dark .auth-form .btn {
+    background-color: #ef4444;
+}
+
+body.dark .auth-form .btn:hover {
+    background-color: #b91c1c;
+}

@@ -83,6 +83,8 @@ try {
 </head>
 <body>
 
+<?php include __DIR__ . '/partials/navbar.php'; ?>
+
 <div class="container" style="max-width: 600px; margin-top: 50px;">
     <h1>Hesap Bilgilerim</h1>
     
@@ -100,6 +102,20 @@ try {
         <a href="logout.php" class="btn">Çıkış Yap</a>
     </div>
 </div>
+
+<script>
+// Tema toggle (navbar.js yerine direkt sayfaya ekleyebilirsin)
+const themeToggle = document.getElementById('theme-toggle');
+
+if(localStorage.getItem('theme') === 'dark'){
+    document.body.classList.add('dark');
+}
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+});
+</script>
 
 </body>
 </html>

@@ -4,34 +4,100 @@ $db = new PDO('sqlite:database.db');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // ... (form gönderme kodun aynı kalacak) ...
+
+if (isset($_SESSION['user_role']))  {
+    if ($_SESSION['user_role'] === 'admin'){
+        header("Location: admin.php");
+        exit;
+    }
+    else if($_SESSION['user_role'] === 'user' ){
+        header("Location: my_account.php");
+        exit;
+    }
+    
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+    
+    // Boş alan kontrolü
+    if (empty($email) || empty($password)) {
+        $error = "Lütfen e-posta ve şifre giriniz.";
+    } else {
+        // Veritabanında kullanıcıyı ara
+        $stmt = $db->prepare("SELECT * FROM User WHERE email = :email LIMIT 1");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($user && password_verify($password, $user['password'])) {
+            // Giriş başarılı
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_role'] = $user['role']; // 'admin' veya 'user'
+            
+            // Role göre yönlendir
+            if ($user['role'] === 'admin') {
+                header("Location: admin.php");
+                exit;
+            } else {
+                header("Location: index.php");
+                exit;
+            }
+        } else {
+            $error = "E-posta veya şifre hatalı!";
+        }
+    }
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <title>Giriş Yap</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/auth.css">
 </head>
 <body>
-<header>
-    <div class="nav-container">
-        <div class="nav-right">
-            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
-                <a href="admin.php" class="nav-link" style="font-size: 16px;">Admin Paneline Dön</a>
-                <a href="logout.php" class="account-icon" title="Çıkış Yap">&#10162;</a>
-            <?php else: ?>
-                <a href="login.php" class="account-icon" title="Hesabım">&#128100;</a>
-            <?php endif; ?>
-            <button id="theme-toggle" class="theme-icon">&#9788;</button>
-        </div>
-    </div>
-</header>
+<?php include __DIR__ . '/partials/navbar.php'; ?>
+<div class="container auth-page login-container">
+    <h2>Giriş Yap</h2>
+    <form method="POST" class="auth-form">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Şifre" required>
+        <button class="btn" type="submit">Giriş Yap</button>
 
-<div class="container auth-page" style="max-width:400px; text-align:center;">
-    </div>
+    </form>
+
+    <p class="signup-text">
+            Hesabınız yok mu? <a href="register.php" style="color:#dc2626; font-weight:bold;">Kayıt Ol</a>
+    </p>
+
+    <?php if (!empty($error)): ?>
+        <p class="error-msg"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+</div>
+
+
+
 
 </body>
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+if(localStorage.getItem('theme') === 'dark'){
+    body.classList.add('dark');
+} else {
+    body.classList.remove('dark');
+}
+
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+});
+</script>
+
 </html>

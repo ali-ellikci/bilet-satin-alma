@@ -1,43 +1,99 @@
+/* --- Container & Layout --- */
+.container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
 
-        /* --- Sadece bu sayfaya özel CSS kodları --- */
-        .seat-selection-container { display: flex; flex-wrap: wrap; gap: 40px; }
-        .trip-details { flex: 1; min-width: 300px; }
-        .seat-map-container { flex: 2; min-width: 340px; } /* Genişlik artırıldı */
+.seat-selection-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
 
-        .seat-map {
-            display: grid;
-            /* YENİ VE DOĞRU YAPI: 1 koltuk, 1 koridor, 2 koltuk */
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 12px; /* Boşluk biraz artırıldı */
-            max-width: 340px;
-            margin: 20px auto;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #ddd;
-            box-sizing: border-box; /* Bu hala gerekli ve doğru */
-        }
-        body.dark .seat-map { background-color: #2b0000; border-color: #444; }
+.trip-details {
+    flex: 1;
+    min-width: 300px;
+}
 
-        .seat, .aisle-space {
-            aspect-ratio: 1 / 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 8px;
-            font-weight: bold;
-            color: white;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-        .aisle-space { background-color: transparent; } /* Koridor artık bir grid hücresi */
-        .seat { cursor: pointer; }
-        .seat.empty { background-color: #4caf50; }
-        .seat.empty:hover { background-color: #45a049; transform: scale(1.05); }
-        .seat.booked { background-color: #dc2626; cursor: not-allowed; opacity: 0.7; }
-        .seat.selected { background-color: #2196F3; transform: scale(1.1); box-shadow: 0 0 10px #2196F3; }
-        
-        .summary { text-align: center; margin-top: 20px; }
-        .summary h3 { margin-bottom: 5px; }
-        .summary #total-price-display { color: #dc2626; font-size: 24px; }
-        body.dark .summary #total-price-display { color: #ef4444; }
+.seat-map-container {
+    flex: 2;
+    min-width: 340px;
+}
+
+/* --- Seat map --- */
+.seat-map {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 340px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.seat, .aisle-space {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.aisle-space { background-color: transparent; }
+.seat { cursor: pointer; }
+.seat.empty { background-color: #4caf50; }
+.seat.empty:hover { background-color: #45a049; transform: scale(1.05); }
+.seat.booked { background-color: #dc2626; cursor: not-allowed; opacity: 0.7; }
+.seat.selected { background-color: #2196F3; transform: scale(1.1); box-shadow: 0 0 10px #2196F3; }
+
+/* --- Summary --- */
+.summary { text-align: center; margin-top: 20px; }
+.summary h3 { margin-bottom: 5px; }
+#total-price-display { color: #dc2626; font-size: 24px; }
+.btn {
+    padding: 10px 20px;
+    background-color: #dc2626;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.btn:hover { background-color: #b91c1c; }
+
+/* --- Dark theme --- */
+body.dark {
+    background-color: #2a0000;
+    color: #fff;
+}
+
+body.dark .seat-map {
+    background-color: #3b0000;
+    border-color: #444;
+}
+
+body.dark .container,
+body.dark .seat-selection-container,
+body.dark .trip-details,
+body.dark .seat-map-container {
+    color: #fff;
+}
+
+body.dark .trip-details p,
+body.dark .seat-map-container h1 {
+    color: #fff;
+}
+
+body.dark .seat.empty:hover { background-color: #45a049; }
+body.dark .seat.booked { background-color: #dc2626; opacity: 0.7; }
+body.dark .seat.selected { background-color: #2196F3; box-shadow: 0 0 10px #2196F3; }
+body.dark #total-price-display { color: #ef4444; }
+body.dark .btn { background-color: #ef4444; }
+body.dark .btn:hover { background-color: #b91c1c; }

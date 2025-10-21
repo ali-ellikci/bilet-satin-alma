@@ -45,22 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Otobüs Seferleri</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/index.css">
 </head>
 <body>
 
-<header>
-    <div class="nav-container">
-        <div class="nav-right">
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="my_tickets.php" class="nav-link">Biletlerim</a>
-                <a href="my_account.php" class="account-icon" title="Hesabım">&#128100;</a>
-            <?php else: ?>
-                <a href="login.php" class="account-icon" title="Giriş Yap">&#128100;</a>
-            <?php endif; ?>
-            <button id="theme-toggle" class="theme-icon" title="Tema">&#9788;</button>
-        </div>
-    </div>
-</header>
+<?php include __DIR__ . '/partials/navbar.php'; ?>
+
 
 <div class="container">
     <h1>Otobüs Seferi Ara</h1>
@@ -105,11 +95,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
-            </div>
-            <button class="btn search-btn-main" type="submit">Ara</button>
+            <button class="icon-btn" type="submit" aria-label="Ara">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                </svg>
+            </button>
+                
         </form>
-    </div>
+        
+    
 
+    
+</div>
     <?php if (!empty($trips)): ?>
         <div class="trips-grid">
             <?php foreach ($trips as $trip): 
@@ -137,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php elseif ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
         <p style="text-align:center; color:red;">Aradığınız kriterlere uygun sefer bulunamadı 😔</p>
     <?php endif; ?>
-</div>
 
 <script>
 // --- TEMA DEĞİŞTİRME KODU ---
@@ -201,6 +197,24 @@ document.addEventListener('DOMContentLoaded', () => {
         dateInput.value = formatDate(today);
     }
 });
+
+    // Ensure select text color updates for some browsers that ignore option styling
+    document.addEventListener('DOMContentLoaded', () => {
+        const selects = document.querySelectorAll('.input-group select');
+        const applySelectColors = () => {
+            selects.forEach(s => {
+                if (body.classList.contains('dark')) {
+                    s.style.color = '#fff';
+                } else {
+                    s.style.color = '#111';
+                }
+            });
+        };
+        applySelectColors();
+        // react to theme toggle
+        themeToggle.addEventListener('click', () => setTimeout(applySelectColors, 50));
+    });
 </script>
 </body>
 </html>
+

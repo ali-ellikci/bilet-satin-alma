@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Modern flat logo: logomark + wordmark -->
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="48" viewBox="0 0 200 48" role="img" aria-label="BiletSatınAlma">
+  <defs>
+    <linearGradient id="lg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#ff7a7a" />
+      <stop offset="100%" stop-color="#dc2626" />
+    </linearGradient>
+  </defs>
+  <!-- logomark: rounded square with bus-like icon -->
+  <g transform="translate(0,0)">
+    <rect x="0" y="0" width="48" height="48" rx="10" fill="url(#lg)" />
+    <g transform="translate(10,12)" fill="#fff" opacity="0.98">
+      <rect x="0" y="6" width="28" height="8" rx="2" />
+      <circle cx="6" cy="20" r="3" />
+      <circle cx="22" cy="20" r="3" />
+      <rect x="4" y="2" width="20" height="4" rx="1" />
+    </g>
+  </g>
+  <!-- wordmark -->
+  <g transform="translate(60,30)" font-family="Inter, Arial, sans-serif">
+    <text x="0" y="-2" fill="#111" font-weight="700" font-size="18">Bilet</text>
+    <text x="42" y="-2" fill="#dc2626" font-weight="700" font-size="18">Satın</text>
+    <text x="95" y="-2" fill="#111" font-weight="500" font-size="18">Alma</text>
+  </g>
+</svg>

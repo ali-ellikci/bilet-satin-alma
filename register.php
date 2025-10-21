@@ -37,17 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Kayıt Ol</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/auth.css">
 </head>
 <body>
-<header>
-    <div class="nav-container">
-        <div class="nav-right">
-            <button id="theme-toggle" class="theme-icon">&#9788;</button>
-        </div>
-    </div>
-</header>
+<?php include __DIR__ . '/partials/navbar.php'; ?>
 
-<div class="container auth-page" style="max-width:400px; text-align:center;">
+<div class="container auth-page login-container" style="max-width:400px; text-align:center;">
     <h1>Kayıt Ol</h1>
     <?php if($error): ?>
         <p style="color:red;"><?= htmlspecialchars($error) ?></p>

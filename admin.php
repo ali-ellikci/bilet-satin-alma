@@ -51,13 +51,7 @@ $total_trips = $db->query("SELECT COUNT(*) FROM Trips")->fetchColumn();
 </head>
 <body>
 
-<header class="admin-header">
-    <h2>Yönetim Paneli</h2>
-    <div>
-        <a href="index.php" target="_blank">Siteyi Gör</a> | 
-        <a href="logout.php">Çıkış Yap</a>
-    </div>
-</header>
+    <?php include __DIR__ . '/partials/navbar.php'; ?>
 
 <div class="container">
     <h1>Hoş Geldin, <?= htmlspecialchars($_SESSION['user_fullname']) ?>!</h1>

@@ -1,0 +1,151 @@
+.tickets-page {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.tickets-page h1 {
+    margin-bottom: 30px;
+    font-size: 32px;
+    color: #dc2626;
+}
+
+.no-tickets {
+    font-size: 18px;
+    color: #555;
+}
+
+.tickets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 50px; /* Kartlar arası boşluk */
+    justify-items: center;
+    margin-bottom: 50px;
+}
+
+.ticket-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.ticket-card h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #dc2626;
+}
+
+.ticket-card p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.ticket-card .status span {
+    font-weight: bold;
+    color: #16a34a; /* Aktif */
+}
+
+.ticket-card.cancelled .status span {
+    color: #dc2626; /* İptal */
+}
+
+.ticket-card:hover {
+    transform: scale(1.03);
+}
+
+/* Dark theme */
+body.dark {
+    background-color: #0d0000;
+    color: #fff;
+}
+
+body.dark .tickets-page h1 {
+    color: #ef4444;
+}
+
+body.dark .ticket-card {
+    background-color: #1a0000;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+body.dark .ticket-card h2 {
+    color: #ef4444;
+}
+
+body.dark .ticket-card p {
+    color: #f5f5f5;
+}
+
+body.dark .ticket-card .status span.active {
+    color: #22c55e;
+}
+
+body.dark .ticket-card.cancelled .status span {
+    color: #f87171;
+}
+
+
+.cancel-btn {
+    margin-top: 15px;
+    padding: 8px 12px;
+    background-color: #dc2626;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #b91c1c;
+}
+
+body.dark .cancel-btn {
+    background-color: #ef4444;
+}
+
+body.dark .cancel-btn:hover {
+    background-color: #f87171;
+}
+
+
+/* kart durumları */
+.ticket-card.active .status span {
+    color: #16a34a; /* yeşil */
+}
+
+.ticket-card.canceled .status span {
+    color: #dc2626; /* kırmızı */
+}
+
+.ticket-card.expired .status span {
+    color: #9ca3af; /* gri */
+}
+
+/* Dark mode için */
+body.dark .ticket-card.active .status span {
+    color: #22c55e;
+}
+
+body.dark .ticket-card.canceled .status span {
+    color: #f87171;
+}
+
+body.dark .ticket-card.expired .status span {
+    color: #6b7280;
+}
+
+
+.ticket-card.active { background-color: #f0fff4; }
+.ticket-card.canceled { background-color: #fff5f5; }
+.ticket-card.expired { background-color: #f9f9f9; }
+
+body.dark .ticket-card.active { background-color: #064e3b; }
+body.dark .ticket-card.canceled { background-color: #7f1d1d; }
+body.dark .ticket-card.expired { background-color: #1f2937; }
