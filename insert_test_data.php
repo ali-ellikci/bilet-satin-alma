@@ -39,7 +39,7 @@ try {
             'departure_time' => '2025-10-10 08:00:00', 
             'arrival_time' => '2025-10-10 14:00:00', 
             'price' => 550.00,
-            'capacity' => 45 // Kapasite sütununu eklediysen bu değeri kullanabilirsin
+            'capacity' => 45
         ],
         [
             'id' => generate_id('TRP'), 
@@ -52,46 +52,45 @@ try {
             'capacity' => 40
         ],
         [
-        'id' => generate_id('TRP'), 
-        'company_id' => $mega_turizm_id, 
-        'departure_city' => 'İstanbul',
-        'destination_city' => 'Ankara',
-        'departure_time' => date('Y-m-d H:i:s', strtotime('+35 days 08:00')), 
-        'arrival_time' => date('Y-m-d H:i:s', strtotime('+35 days 14:00')), 
-        'price' => 550.00,
-        'capacity' => 45
+            'id' => generate_id('TRP'), 
+            'company_id' => $mega_turizm_id, 
+            'departure_city' => 'İstanbul',
+            'destination_city' => 'Ankara',
+            'departure_time' => date('Y-m-d H:i:s', strtotime('+35 days 08:00')), 
+            'arrival_time' => date('Y-m-d H:i:s', strtotime('+35 days 14:00')), 
+            'price' => 550.00,
+            'capacity' => 45
         ],
         [
-        'id' => generate_id('TRP'), 
-        'company_id' => $super_seyahat_id, 
-        'departure_city' => 'Ankara',
-        'destination_city' => 'İzmir',
-        'departure_time' => date('Y-m-d H:i:s', strtotime('+36 days 12:00')), 
-        'arrival_time' => date('Y-m-d H:i:s', strtotime('+36 days 20:00')), 
-        'price' => 620.50,
-        'capacity' => 40
+            'id' => generate_id('TRP'), 
+            'company_id' => $super_seyahat_id, 
+            'departure_city' => 'Ankara',
+            'destination_city' => 'İzmir',
+            'departure_time' => date('Y-m-d H:i:s', strtotime('+36 days 12:00')), 
+            'arrival_time' => date('Y-m-d H:i:s', strtotime('+36 days 20:00')), 
+            'price' => 620.50,
+            'capacity' => 40
         ],
         [
-        'id' => generate_id('TRP'), 
-        'company_id' => $mega_turizm_id, 
-        'departure_city' => 'İzmir',
-        'destination_city' => 'Antalya',
-        'departure_time' => date('Y-m-d H:i:s', strtotime('+37 days 09:00')), 
-        'arrival_time' => date('Y-m-d H:i:s', strtotime('+37 days 15:30')), 
-        'price' => 700.00,
-        'capacity' => 50
+            'id' => generate_id('TRP'), 
+            'company_id' => $mega_turizm_id, 
+            'departure_city' => 'İzmir',
+            'destination_city' => 'Antalya',
+            'departure_time' => date('Y-m-d H:i:s', strtotime('+37 days 09:00')), 
+            'arrival_time' => date('Y-m-d H:i:s', strtotime('+37 days 15:30')), 
+            'price' => 700.00,
+            'capacity' => 50
         ],
         [
-        'id' => generate_id('TRP'), 
-        'company_id' => $super_seyahat_id, 
-        'departure_city' => 'Antalya',
-        'destination_city' => 'İstanbul',
-        'departure_time' => date('Y-m-d H:i:s', strtotime('+38 days 07:30')), 
-        'arrival_time' => date('Y-m-d H:i:s', strtotime('+38 days 13:30')), 
-        'price' => 750.00,
-        'capacity' => 45
+            'id' => generate_id('TRP'), 
+            'company_id' => $super_seyahat_id, 
+            'departure_city' => 'Antalya',
+            'destination_city' => 'İstanbul',
+            'departure_time' => date('Y-m-d H:i:s', strtotime('+38 days 07:30')), 
+            'arrival_time' => date('Y-m-d H:i:s', strtotime('+38 days 13:30')), 
+            'price' => 750.00,
+            'capacity' => 45
         ],
-        // Diğer seferlerin...
     ];
     
     $stmt_trip = $db->prepare("
@@ -105,34 +104,44 @@ try {
 
     echo "✅ Test Seferleri eklendi.\n";
 
-    // --- 3. YENİ KULLANICI EKLEME BÖLÜMÜ ---
-
-    // Parolayı güvenli bir şekilde şifrele
+    // --- 3. Normal test kullanıcısı ---
     $hashed_password = password_hash('test', PASSWORD_DEFAULT);
 
-    // Eklenecek kullanıcı bilgileri
     $test_user = [
         'id' => generate_id('USR'),
         'full_name' => 'test',
         'email' => 'test@test.test',
         'role' => 'user',
         'password' => $hashed_password,
-        'company_id' => null, // Normal kullanıcı olduğu için company_id boş
+        'company_id' => null,
         'balance' => 999999999.0
     ];
     
-    // Kullanıcıyı veritabanına ekle. 'INSERT OR IGNORE' sayesinde kullanıcı zaten varsa hata vermez.
     $stmt_user = $db->prepare(
         "INSERT OR IGNORE INTO User (id, full_name, email, role, password, company_id, balance) 
          VALUES (:id, :full_name, :email, :role, :password, :company_id, :balance)"
     );
-
     $stmt_user->execute($test_user);
+    echo "✅ 'test' kullanıcısı eklendi (varsa atlandı).\n";
 
-    echo "✅ 'test' kullanıcısı başarıyla eklendi (varsa atlandı).\n";
+    // --- 4. Firma Admin Kullanıcısı ---
+    $hashed_firma_pass = password_hash('test_firma_admin', PASSWORD_DEFAULT);
+
+    $test_firma_admin = [
+        'id' => generate_id('USR'),
+        'full_name' => 'Test Firma Admin',
+        'email' => 'test_firma_admin@test.com',
+        'role' => 'company_admin',
+        'password' => $hashed_firma_pass,
+        'company_id' => $mega_turizm_id, // Mega Turizm'e bağlı olsun
+        'balance' => 0.0
+    ];
+
+    $stmt_user->execute($test_firma_admin);
+    echo "✅ 'test_firma_admin' kullanıcısı başarıyla eklendi.\n";
 
 
-    echo "\n\nBaşlangıç verileri başarıyla eklendi! Artık uygulamayı kullanabilirsiniz.\n";
+    echo "\n🎉 Başlangıç verileri başarıyla eklendi! Artık uygulamayı test edebilirsin.\n";
 
 } catch (PDOException $e) {
     echo "❌ Hata: " . $e->getMessage() . PHP_EOL;

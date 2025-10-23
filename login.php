@@ -35,6 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Giriş başarılı
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_role'] = $user['role']; // 'admin' veya 'user'
+            // Store company_id and username for company admins and display
+            $_SESSION['company_id'] = $user['company_id'] ?? null;
+            $_SESSION['username'] = $user['full_name'] ?? '';
+            $_SESSION['username'] = $user['full_name'];
+            $_SESSION['company_id'] = $user['company_id'];
             
             // Role göre yönlendir
             if ($user['role'] === 'admin') {
