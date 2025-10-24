@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bilet-satinalma-web
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./db:/var/www/html/db
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+    restart: unless-stopped
+    networks:
+      - bilet-network
+
+  # İsteğe bağlı: Veritabanı yönetimi için phpMyAdmin benzeri SQLite browser
+  sqlite-browser:
+    image: coleifer/sqlite-web
+    container_name: bilet-sqlite-browser
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./database.db:/data/database.db
+    command: ["sqlite_web", "/data/database.db", "--host", "0.0.0.0", "--port", "8080"]
+    restart: unless-stopped
+    networks:
+      - bilet-network
+    depends_on:
+      - web
+
+networks:
+  bilet-network:
+    driver: bridge
+
+volumes:
+  sqlite-data:

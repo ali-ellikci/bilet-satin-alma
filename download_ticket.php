@@ -1,23 +1,19 @@
 <?php
 session_start();
 
-// --- Yetki kontrolü ---
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'user') {
     http_response_code(403);
     die("Erişim Yetkiniz Yok!");
 }
 
-// --- Ticket ID al ---
 $ticket_id = $_GET['ticket_id'] ?? null;
 if (!$ticket_id) {
     die("Geçersiz bilet ID'si.");
 }
 
-// --- DB bağlantısı ---
 $db = new PDO('sqlite:database.db');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// --- Ticket bilgilerini çek ---
 $stmt_ticket = $db->prepare("
     SELECT tickets.*, trips.departure_city, trips.destination_city, trips.departure_time, trips.arrival_time,
            bus_company.name AS company_name
@@ -36,12 +32,10 @@ if (!$ticket) {
     die("Bilet bulunamadı veya yetkiniz yok.");
 }
 
-// --- Koltuk bilgilerini çek ---
 $stmt_seats = $db->prepare("SELECT seat_number FROM Booked_Seats WHERE ticket_id = :ticket_id");
 $stmt_seats->execute([':ticket_id' => $ticket_id]);
 $seats = $stmt_seats->fetchAll(PDO::FETCH_COLUMN);
 
-// --- PDF oluşturma ---
 require('fpdf/fpdf.php');
 
 $pdf = new FPDF();

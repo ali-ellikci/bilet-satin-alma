@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// --- Yetki Kontrolü: user veya company_admin ---
 if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['user', 'company_admin'])) {
     http_response_code(403);
     die("Erişim Yetkiniz Yok!");
@@ -12,12 +11,10 @@ if (!$ticket_id) {
     die("Geçersiz bilet ID'si!");
 }
 
-// DB bağlantısı
 $db = new PDO('sqlite:database.db');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 try {
-    // Biletin kullanıcıya ait ve aktif olup olmadığını kontrol et
     if ($_SESSION['user_role'] === 'user') {
         $stmt = $db->prepare("
             SELECT t.*, trips.departure_time 
@@ -26,7 +23,7 @@ try {
             WHERE t.id = :ticket_id AND t.user_id = :user_id AND t.status = 'active'
         ");
         $stmt->execute([':ticket_id' => $ticket_id, ':user_id' => $_SESSION['user_id']]);
-    } else { // company_admin
+    } else {
         $stmt = $db->prepare("
             SELECT t.*, trips.departure_time 
             FROM Tickets t
@@ -42,14 +39,12 @@ try {
         die("Bilet bulunamadı veya zaten iptal edilmiş.");
     }
 
-    // --- Kalkış saatinden 1 saat öncesi kontrol ---
     $departure_time = strtotime($ticket['departure_time']);
-    $one_hour_before = $departure_time - 3600; // 3600 saniye = 1 saat
+    $one_hour_before = $departure_time - 3600;
     if (time() > $one_hour_before) {
         die("Üzgünüz, bilet kalkış saatinden 1 saat öncesine kadar iptal edilebilir.");
     }
 
-    // --- Bilet iptal işlemleri ---
     $db->beginTransaction();
     $db->prepare("UPDATE Tickets SET status = 'canceled' WHERE id = :ticket_id")
         ->execute([':ticket_id' => $ticket_id]);

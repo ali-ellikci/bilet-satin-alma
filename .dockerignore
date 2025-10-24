@@ -1,0 +1,34 @@
+# Docker dosyaları
+.dockerignore
+Dockerfile*
+docker-compose*
+
+# IDE ve Editor dosyaları
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
+
+# Log dosyaları
+*.log
+
+# Geçici dosyalar
+tmp/
+temp/
+cache/
+
+# Node modules (eğer varsa)
+node_modules/
+
+# Git dosyaları
+.git/
+.gitignore
+
+# Backup dosyaları
+*.bak
+*.backup

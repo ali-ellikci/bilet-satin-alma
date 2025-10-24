@@ -1,19 +1,14 @@
 <?php
-// Bu dosya, Otobüs Arama uygulamanız için başlangıç verilerini ekler.
 
-// UUID benzeri basit bir ID üreticisi
 function generate_id($prefix = '') {
     return $prefix . uniqid();
 }
 
 try {
-    // Veritabanı bağlantısı
     $db = new PDO('sqlite:database.db');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     echo "Veritabanı bağlantısı başarılı. Veriler ekleniyor...\n";
-
-    // --- 1. Bus_Company (Şirket) Ekleme ---
     $companies = [
         ['id' => generate_id('CMP'), 'name' => 'Mega Turizm', 'logo_path' => '/logos/mega.png'],
         ['id' => generate_id('CMP'), 'name' => 'Süper Seyahat', 'logo_path' => '/logos/super.png'],
@@ -25,11 +20,8 @@ try {
     }
     echo "✅ 2 Şirket eklendi (varsa atlandı).\n";
 
-    // Şirket ID'lerini al
     $mega_turizm_id = $db->query("SELECT id FROM Bus_Company WHERE name='Mega Turizm'")->fetchColumn();
     $super_seyahat_id = $db->query("SELECT id FROM Bus_Company WHERE name='Süper Seyahat'")->fetchColumn();
-
-    // --- 2. Trips (Sefer) Ekleme ---
     $trips = [
         [
             'id' => generate_id('TRP'), 
@@ -122,9 +114,27 @@ try {
          VALUES (:id, :full_name, :email, :role, :password, :company_id, :balance)"
     );
     $stmt_user->execute($test_user);
+    echo "✅ Seferler eklendi (varsa atlandı).\n";
+
+    $hashed_password = password_hash('test', PASSWORD_DEFAULT);
+
+    $test_user = [
+        'id' => generate_id('USR'),
+        'full_name' => 'test',
+        'email' => 'test@test.test',
+        'role' => 'user',
+        'password' => $hashed_password,
+        'company_id' => null,
+        'balance' => 999999999.0
+    ];
+    
+    $stmt_user = $db->prepare(
+        "INSERT OR IGNORE INTO User (id, full_name, email, role, password, company_id, balance) 
+         VALUES (:id, :full_name, :email, :role, :password, :company_id, :balance)"
+    );
+    $stmt_user->execute($test_user);
     echo "✅ 'test' kullanıcısı eklendi (varsa atlandı).\n";
 
-    // --- 4. Firma Admin Kullanıcısı ---
     $hashed_firma_pass = password_hash('test_firma_admin', PASSWORD_DEFAULT);
 
     $test_firma_admin = [
@@ -133,13 +143,27 @@ try {
         'email' => 'test_firma_admin@test.com',
         'role' => 'company_admin',
         'password' => $hashed_firma_pass,
-        'company_id' => $mega_turizm_id, // Mega Turizm'e bağlı olsun
+        'company_id' => $mega_turizm_id,
         'balance' => 0.0
     ];
 
     $stmt_user->execute($test_firma_admin);
     echo "✅ 'test_firma_admin' kullanıcısı başarıyla eklendi.\n";
 
+    $hashed_admin_pass = password_hash('admin', PASSWORD_DEFAULT);
+
+    $test_admin = [
+        'id' => generate_id('USR'),
+        'full_name' => 'Sistem Admin',
+        'email' => 'admin@test.com',
+        'role' => 'admin',
+        'password' => $hashed_admin_pass,
+        'company_id' => null,
+        'balance' => 0.0
+    ];
+
+    $stmt_user->execute($test_admin);
+    echo "✅ 'admin' kullanıcısı başarıyla eklendi.\n";
 
     echo "\n🎉 Başlangıç verileri başarıyla eklendi! Artık uygulamayı test edebilirsin.\n";
 

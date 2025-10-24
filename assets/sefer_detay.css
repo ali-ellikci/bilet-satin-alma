@@ -58,6 +58,99 @@
 .summary { text-align: center; margin-top: 20px; }
 .summary h3 { margin-bottom: 5px; }
 #total-price-display { color: #dc2626; font-size: 24px; }
+
+/* --- Coupon Section --- */
+.coupon-section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.coupon-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.coupon-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.coupon-input-group input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.coupon-input-group input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.coupon-btn {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.coupon-btn:hover {
+    background-color: #218838;
+}
+
+.coupon-message {
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.coupon-message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.coupon-message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.discount-info {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #d1ecf1;
+    border: 1px solid #b8daff;
+    border-radius: 4px;
+}
+
+.discount-info p {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.discount-info #discount-amount {
+    color: #28a745;
+}
+
+.discount-info #discounted-total {
+    color: #dc3545;
+    font-size: 18px;
+}
+
 .btn {
     padding: 10px 20px;
     background-color: #dc2626;
@@ -97,3 +190,58 @@ body.dark .seat.selected { background-color: #2196F3; box-shadow: 0 0 10px #2196
 body.dark #total-price-display { color: #ef4444; }
 body.dark .btn { background-color: #ef4444; }
 body.dark .btn:hover { background-color: #b91c1c; }
+
+/* Dark theme - Coupon Section */
+body.dark .coupon-section {
+    background-color: #4a0000;
+    border-color: #666;
+}
+
+body.dark .coupon-section label {
+    color: #fff;
+}
+
+body.dark .coupon-input-group input {
+    background-color: #3a0000;
+    border-color: #666;
+    color: #fff;
+}
+
+body.dark .coupon-input-group input:disabled {
+    background-color: #2a0000;
+    color: #aaa;
+}
+
+body.dark .coupon-btn {
+    background-color: #198754;
+}
+
+body.dark .coupon-btn:hover {
+    background-color: #157347;
+}
+
+body.dark .coupon-message.success {
+    color: #75b798;
+    background-color: #0f2419;
+    border-color: #0a1e0f;
+}
+
+body.dark .coupon-message.error {
+    color: #f1aeb5;
+    background-color: #2c0b0e;
+    border-color: #58151c;
+}
+
+body.dark .discount-info {
+    background-color: #1e3a5f;
+    border-color: #3e5a7a;
+    color: #fff;
+}
+
+body.dark .discount-info #discount-amount {
+    color: #75b798;
+}
+
+body.dark .discount-info #discounted-total {
+    color: #f87171;
+}

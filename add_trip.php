@@ -1,13 +1,11 @@
 <?php
 session_start();
 
-// only company admins allowed
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'company_admin') {
     header('Location: login.php');
     exit;
 }
 
-// db
 try {
     $db = new PDO('sqlite:database.db');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -17,7 +15,6 @@ try {
 
 $company_id = $_SESSION['company_id'] ?? null;
 if (empty($company_id)) {
-    // attempt to recover from User table
     $stmtTmp = $db->prepare("SELECT company_id FROM User WHERE id = ? LIMIT 1");
     $stmtTmp->execute([$_SESSION['user_id']]);
     $u = $stmtTmp->fetch(PDO::FETCH_ASSOC);
@@ -33,7 +30,6 @@ if (empty($company_id)) {
     exit;
 }
 
-// determine if edit
 $editing = false;
 $trip = [
     'id' => '',
@@ -52,7 +48,6 @@ if (!empty($_GET['id'])) {
     if ($t) {
         $editing = true;
         $trip = $t;
-        // convert datetime to datetime-local format
         $dt = new DateTime($trip['departure_time']);
         $trip['departure_time'] = $dt->format('Y-m-d\TH:i');
         $dt2 = new DateTime($trip['arrival_time']);
@@ -98,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         if (!empty($_POST['id'])) {
-            // update
             $id = $_POST['id'];
             $stmt = $db->prepare("UPDATE Trips SET departure_city = ?, destination_city = ?, departure_time = ?, arrival_time = ?, price = ?, capacity = ? WHERE id = ? AND company_id = ?");
             try {
@@ -110,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors[] = 'Veritabanı hatası: ' . $e->getMessage();
             }
         } else {
-            // insert
             $id = uniqid('TRP');
             $stmt = $db->prepare("INSERT INTO Trips (id, company_id, departure_city, destination_city, departure_time, arrival_time, price, capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             try {

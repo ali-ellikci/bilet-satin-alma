@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'user') {
 $trip_id = $_POST['trip_id'] ?? null;
 $selected_seats_str = $_POST['selected_seats'] ?? null;
 $selected_seats = $selected_seats_str ? explode(',', $selected_seats_str) : [];
+$coupon_code = strtoupper(trim($_POST['coupon_code'] ?? ''));
 
 if (!$trip_id || empty($selected_seats)) {
     $_SESSION['error_message'] = "Eksik bilgi gönderildi veya koltuk seçilmedi.";
@@ -34,7 +35,59 @@ $trip = $stmt_trip->fetch(PDO::FETCH_ASSOC);
 
 if (!$trip) die("Geçersiz sefer ID'si.");
 
-$total_price = count($selected_seats) * $trip['price'];
+$original_price = count($selected_seats) * $trip['price'];
+$total_price = $original_price;
+$discount_amount = 0;
+$coupon_info = null;
+
+// --- Kupon kontrolü ---
+if (!empty($coupon_code)) {
+    $stmt_coupon = $db->prepare("
+        SELECT c.*, COUNT(uc.id) as used_count 
+        FROM Coupons c 
+        LEFT JOIN User_Coupons uc ON c.id = uc.coupon_id 
+        WHERE c.code = :code 
+        GROUP BY c.id
+    ");
+    $stmt_coupon->execute([':code' => $coupon_code]);
+    $coupon = $stmt_coupon->fetch(PDO::FETCH_ASSOC);
+    
+    if ($coupon) {
+        // Kupon geçerlilik kontrolleri
+        $errors = [];
+        
+        // Süre kontrolü
+        if (strtotime($coupon['expire_date']) <= time()) {
+            $errors[] = "Kupon süresi dolmuş.";
+        }
+        
+        // Kullanım limiti kontrolü
+        if ($coupon['used_count'] >= $coupon['usage_limit']) {
+            $errors[] = "Kupon kullanım limiti dolmuş.";
+        }
+        
+        // Kullanıcı daha önce bu kuponu kullanmış mı?
+        $stmt_user_coupon = $db->prepare("SELECT id FROM User_Coupons WHERE coupon_id = ? AND user_id = ? LIMIT 1");
+        $stmt_user_coupon->execute([$coupon['id'], $_SESSION['user_id']]);
+        if ($stmt_user_coupon->fetch()) {
+            $errors[] = "Bu kuponu daha önce kullandınız.";
+        }
+        
+        if (empty($errors)) {
+            $discount_amount = ($original_price * $coupon['discount']) / 100;
+            $total_price = $original_price - $discount_amount;
+            $coupon_info = $coupon;
+        } else {
+            $_SESSION['error_message'] = "Kupon hatası: " . implode(", ", $errors);
+            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+            exit;
+        }
+    } else {
+        $_SESSION['error_message'] = "Geçersiz kupon kodu.";
+        header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+        exit;
+    }
+}
 
 // --- Bilet ve Koltuk ekleme ---
 try {
@@ -66,6 +119,15 @@ try {
         ]);
     }
 
+    // Kupon kullanıldıysa User_Coupons tablosuna ekle
+    if ($coupon_info) {
+        $stmt_user_coupon = $db->prepare("
+            INSERT INTO User_Coupons (id, coupon_id, user_id) 
+            VALUES (?, ?, ?)
+        ");
+        $stmt_user_coupon->execute(['UC_' . uniqid(), $coupon_info['id'], $_SESSION['user_id']]);
+    }
+
     $db->commit();
 } catch (PDOException $e) {
     $db->rollBack();
@@ -94,6 +156,16 @@ try {
         <p><strong>Kalkış:</strong> <?= date('d F Y, H:i', strtotime($trip['departure_time'])) ?></p>
         <p><strong>Varış:</strong> <?= date('d F Y, H:i', strtotime($trip['arrival_time'])) ?></p>
         <p><strong>Koltuklar:</strong> <?= implode(', ', $selected_seats) ?></p>
+        
+        <?php if ($coupon_info): ?>
+            <div style="background: #dcfce7; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #bbf7d0;">
+                <p style="margin: 0; color: #15803d;"><strong>🎫 Kupon Uygulandı:</strong> <?= htmlspecialchars($coupon_info['code']) ?></p>
+                <p style="margin: 5px 0 0 0; color: #15803d;">%<?= $coupon_info['discount'] ?> indirim</p>
+            </div>
+            <p><strong>Orijinal Tutar:</strong> <?= number_format($original_price, 2) ?> ₺</p>
+            <p><strong>İndirim:</strong> -<?= number_format($discount_amount, 2) ?> ₺</p>
+        <?php endif; ?>
+        
         <p><strong>Toplam Tutar:</strong> <?= number_format($total_price, 2) ?> ₺</p>
     </div>
 
