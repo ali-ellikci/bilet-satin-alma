@@ -414,8 +414,6 @@ $trips = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <ul class="sidebar-menu">
                 <li><a href="company_admin.php" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="add_trip.php"><i class="fas fa-plus"></i> Sefer Ekle</a></li>
-                <li><a href="#"><i class="fas fa-chart-line"></i> Raporlar</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Ayarlar</a></li>
                 <li><a href="index.php"><i class="fas fa-home"></i> Ana Sayfa</a></li>
                 <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
             </ul>
