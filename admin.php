@@ -300,9 +300,6 @@ $total_company_admins = $db->query("SELECT COUNT(*) FROM User WHERE role = 'comp
                 <li><a href="manage_companies.php"><i class="fas fa-building"></i> Firmalar</a></li>
                 <li><a href="manage_company_admins.php"><i class="fas fa-user-tie"></i> Firma Adminleri</a></li>
                 <li><a href="manage_coupons.php"><i class="fas fa-ticket-alt"></i> Kuponlar</a></li>
-                <li><a href="admin_panel.php"><i class="fas fa-users"></i> Kullanıcılar</a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i> Raporlar</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Ayarlar</a></li>
                 <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a></li>
             </ul>
         </nav>

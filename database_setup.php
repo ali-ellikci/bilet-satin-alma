@@ -40,9 +40,14 @@ try {
         CREATE TABLE IF NOT EXISTS Coupons (
             id TEXT PRIMARY KEY,
             code TEXT UNIQUE NOT NULL,
-            discount REAL NOT NULL,
-            usage_limit INTEGER NOT NULL,
-            expire_date DATETIME NOT NULL,
+            discount_type TEXT NOT NULL CHECK(discount_type IN ('percentage', 'fixed')) DEFAULT 'percentage',
+            discount_value REAL NOT NULL,
+            min_amount REAL DEFAULT 0,
+            usage_limit INTEGER NOT NULL DEFAULT 1,
+            used_count INTEGER DEFAULT 0,
+            valid_from DATETIME,
+            valid_until DATETIME,
+            is_active INTEGER DEFAULT 1,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     ");

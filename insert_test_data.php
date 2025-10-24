@@ -165,6 +165,53 @@ try {
     $stmt_user->execute($test_admin);
     echo "✅ 'admin' kullanıcısı başarıyla eklendi.\n";
 
+    // Test kuponları ekle
+    $coupons = [
+        [
+            'id' => generate_id('CPN'),
+            'code' => 'YENI20',
+            'discount_type' => 'percentage', 
+            'discount_value' => 20.0,
+            'min_amount' => 100.0,
+            'usage_limit' => 100,
+            'used_count' => 0,
+            'valid_from' => '2025-01-01 00:00:00',
+            'valid_until' => '2025-12-31 23:59:59',
+            'is_active' => 1
+        ],
+        [
+            'id' => generate_id('CPN'),
+            'code' => 'INDIRIM50',
+            'discount_type' => 'fixed',
+            'discount_value' => 50.0,
+            'min_amount' => 200.0,
+            'usage_limit' => 50,
+            'used_count' => 0,
+            'valid_from' => '2025-01-01 00:00:00',
+            'valid_until' => '2025-12-31 23:59:59',
+            'is_active' => 1
+        ],
+        [
+            'id' => generate_id('CPN'),
+            'code' => 'WELCOME10',
+            'discount_type' => 'percentage',
+            'discount_value' => 10.0,
+            'min_amount' => 50.0,
+            'usage_limit' => 200,
+            'used_count' => 0,
+            'valid_from' => '2025-01-01 00:00:00',
+            'valid_until' => '2025-12-31 23:59:59',
+            'is_active' => 1
+        ]
+    ];
+
+    $stmt_coupon = $db->prepare("INSERT OR IGNORE INTO Coupons (id, code, discount_type, discount_value, min_amount, usage_limit, used_count, valid_from, valid_until, is_active) VALUES (:id, :code, :discount_type, :discount_value, :min_amount, :usage_limit, :used_count, :valid_from, :valid_until, :is_active)");
+    
+    foreach ($coupons as $coupon) {
+        $stmt_coupon->execute($coupon);
+    }
+    echo "✅ Test kuponları eklendi.\n";
+
     echo "\n🎉 Başlangıç verileri başarıyla eklendi! Artık uygulamayı test edebilirsin.\n";
 
 } catch (PDOException $e) {
