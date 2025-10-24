@@ -10,6 +10,10 @@ if (isset($_SESSION['user_role']))  {
         header("Location: admin.php");
         exit;
     }
+    else if($_SESSION['user_role'] === 'company_admin' ){
+        header("Location: company_admin.php");
+        exit;
+    }
     else if($_SESSION['user_role'] === 'user' ){
         header("Location: my_account.php");
         exit;
@@ -44,6 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Role göre yönlendir
             if ($user['role'] === 'admin') {
                 header("Location: admin.php");
+                exit;
+            } elseif ($user['role'] === 'company_admin') {
+                header("Location: company_admin.php");
                 exit;
             } else {
                 header("Location: index.php");

@@ -377,9 +377,6 @@ $total_company_admins = $db->query("SELECT COUNT(*) FROM User WHERE role = 'comp
                         <a href="manage_coupons.php" class="action-btn coupons">
                             <i class="fas fa-ticket-alt"></i> Kupon Yönetimi
                         </a>
-                        <a href="admin_panel.php" class="action-btn">
-                            <i class="fas fa-users"></i> Kullanıcı Listesi
-                        </a>
                     </div>
                 </div>
             </div>

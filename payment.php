@@ -74,7 +74,11 @@ if (!empty($coupon_code)) {
         }
         
         if (empty($errors)) {
-            $discount_amount = ($original_price * $coupon['discount']) / 100;
+            if ($coupon['discount_type'] === 'percentage') {
+                $discount_amount = ($original_price * $coupon['discount_value']) / 100;
+            } else {
+                $discount_amount = min($coupon['discount_value'], $original_price);
+            }
             $total_price = $original_price - $discount_amount;
             $coupon_info = $coupon;
         } else {
@@ -160,7 +164,9 @@ try {
         <?php if ($coupon_info): ?>
             <div style="background: #dcfce7; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #bbf7d0;">
                 <p style="margin: 0; color: #15803d;"><strong>🎫 Kupon Uygulandı:</strong> <?= htmlspecialchars($coupon_info['code']) ?></p>
-                <p style="margin: 5px 0 0 0; color: #15803d;">%<?= $coupon_info['discount'] ?> indirim</p>
+                <p style="margin: 5px 0 0 0; color: #15803d;">
+                    <?= $coupon_info['discount_type'] === 'percentage' ? '%' . $coupon_info['discount_value'] . ' indirim' : $coupon_info['discount_value'] . ' ₺ indirim' ?>
+                </p>
             </div>
             <p><strong>Orijinal Tutar:</strong> <?= number_format($original_price, 2) ?> ₺</p>
             <p><strong>İndirim:</strong> -<?= number_format($discount_amount, 2) ?> ₺</p>

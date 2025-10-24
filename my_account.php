@@ -12,6 +12,11 @@ if ($_SESSION['user_role'] == 'admin') {
     exit;
 }
 
+if ($_SESSION['user_role'] == 'company_admin') {
+    header('Location: company_admin.php');
+    exit;
+}
+
 // Veritabanı bağlantısı
 $db = new PDO('sqlite:database.db');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
